@@ -2,13 +2,13 @@ package com.lucas.animes.api.controller;
 
 import com.lucas.animes.api.request.AnimeRequestBody;
 import com.lucas.animes.entity.Anime;
+import com.lucas.animes.exception.BadRequestException;
 import com.lucas.animes.service.AnimeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class AnimeController {
 	public ResponseEntity<?> findById(@PathVariable UUID id) {
 		try {
 			return ResponseEntity.ok(service.findById(id));
-		} catch (ResponseStatusException e) {
+		} catch (BadRequestException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -38,7 +38,7 @@ public class AnimeController {
 	public ResponseEntity<?> save(@RequestBody @Valid AnimeRequestBody animeRequestBody) {
 		try {
 			return new ResponseEntity<>(service.save(animeRequestBody), HttpStatus.CREATED);
-		}catch (ResponseStatusException e) {
+		}catch (BadRequestException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -48,7 +48,16 @@ public class AnimeController {
 		try {
 			service.delete(id);
 			return ResponseEntity.ok("Anime deleted with success.");
-		}catch (ResponseStatusException e) {
+		}catch (BadRequestException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping
+	public ResponseEntity<?> update(@RequestBody @Valid AnimeRequestBody animeRequestBody) {
+		try {
+			return new ResponseEntity<>(service.update(animeRequestBody), HttpStatus.OK);
+		}catch (BadRequestException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
