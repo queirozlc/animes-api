@@ -14,6 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class AnimeRequestBody {
 	private UUID id;
-	@NotBlank(message = "Anime's name cannot be empty.")
+	@NotBlank(message = "Anime name cannot be empty.")
 	private String name;
 }

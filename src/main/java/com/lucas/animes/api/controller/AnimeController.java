@@ -2,7 +2,6 @@ package com.lucas.animes.api.controller;
 
 import com.lucas.animes.api.request.AnimeRequestBody;
 import com.lucas.animes.entity.Anime;
-import com.lucas.animes.exception.BadRequestException;
 import com.lucas.animes.service.AnimeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,39 +25,28 @@ public class AnimeController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findById(@PathVariable UUID id) {
-		try {
-			return ResponseEntity.ok(service.findById(id));
-		} catch (BadRequestException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<Anime> findById(@PathVariable UUID id) {
+		return ResponseEntity.ok(service.findById(id));
+	}
+
+	@GetMapping("/find")
+	public ResponseEntity<Anime> findByName(@RequestParam String name) {
+		return new ResponseEntity<>(service.findByName(name), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody @Valid AnimeRequestBody animeRequestBody) {
-		try {
-			return new ResponseEntity<>(service.save(animeRequestBody), HttpStatus.CREATED);
-		}catch (BadRequestException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<Anime> save(@RequestBody @Valid AnimeRequestBody animeRequestBody) {
+		return new ResponseEntity<>(service.save(animeRequestBody), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable UUID id) {
-		try {
-			service.delete(id);
-			return ResponseEntity.ok("Anime deleted with success.");
-		}catch (BadRequestException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
+		service.delete(id);
+		return ResponseEntity.ok("Anime deleted with success.");
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody @Valid AnimeRequestBody animeRequestBody) {
-		try {
-			return new ResponseEntity<>(service.update(animeRequestBody), HttpStatus.OK);
-		}catch (BadRequestException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<Anime> update(@RequestBody @Valid AnimeRequestBody animeRequestBody) {
+		return new ResponseEntity<>(service.update(animeRequestBody), HttpStatus.OK);
 	}
 }

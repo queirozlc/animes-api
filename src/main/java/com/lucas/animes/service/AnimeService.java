@@ -31,6 +31,11 @@ public class AnimeService {
 				.orElseThrow(() -> new BadRequestException("Anime not found."));
 	}
 
+	@Transactional(readOnly = true)
+	public Anime findByName(String name) {
+		return repository.findByName(name).orElseThrow(() -> new BadRequestException("Anime not found."));
+	}
+
 	@Transactional
 	public Anime save(@Valid AnimeRequestBody animeRequestBody) {
 		return repository.save(AnimeMapper.INSTANCE.toAnime(animeRequestBody));
