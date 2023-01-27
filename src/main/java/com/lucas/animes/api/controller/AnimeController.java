@@ -5,11 +5,12 @@ import com.lucas.animes.entity.Anime;
 import com.lucas.animes.service.AnimeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,8 +21,8 @@ public class AnimeController {
 	private final AnimeService service;
 
 	@GetMapping
-	public ResponseEntity<List<Anime>> listAll() {
-		return ResponseEntity.ok(service.listAll());
+	public ResponseEntity<Page<Anime>> listAll(Pageable pageable) {
+		return ResponseEntity.ok(service.listAll(pageable));
 	}
 
 	@GetMapping("/{id}")
