@@ -4,7 +4,7 @@ import com.lucas.animes.api.request.AnimeRequestBody;
 import com.lucas.animes.entity.Anime;
 import com.lucas.animes.exception.BadRequestException;
 import com.lucas.animes.repository.AnimeRepository;
-import com.lucas.animes.util.mapper.AnimeMapper;
+import com.lucas.animes.mapper.AnimeMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

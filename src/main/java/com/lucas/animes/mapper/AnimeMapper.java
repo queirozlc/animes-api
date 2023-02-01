@@ -1,11 +1,11 @@
-package com.lucas.animes.util.mapper;
+package com.lucas.animes.mapper;
 
 import com.lucas.animes.api.request.AnimeRequestBody;
 import com.lucas.animes.entity.Anime;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface AnimeMapper {
 
 	AnimeMapper INSTANCE = Mappers.getMapper(AnimeMapper.class);
